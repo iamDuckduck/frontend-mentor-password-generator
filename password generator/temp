@@ -1,0 +1,130 @@
+
+var slideValue = document.getElementById('range');
+var y = document.getElementById('f')
+y.innerHTML = slideValue.value;
+
+slideValue.oninput = function() {
+    y.innerHTML = this.value
+}
+
+//get id of the password output test
+var generated_pw = document.getElementById('generated_pw');
+//get id of the generation button
+const generate_button = document.getElementById('generate-button');
+generate_button.addEventListener("click", password_generation);
+
+
+var upper_case_checkbox = document.getElementById('uppercase');
+var lower_case_checkbox = document.getElementById('lowercase');
+var number_checkbox = document.getElementById('number');
+var symbol_checkbox = document.getElementById('symbol');
+var strength_in_word = document.getElementById('strength-level-in-word');
+
+var strength = 0;
+var bar_list = document.getElementsByClassName('bar-list');
+upper_case_checkbox.addEventListener("change", strength_level_check); //call back function?
+lower_case_checkbox.addEventListener("change", strength_level_check);// why not strength_level_check (element);
+number_checkbox.addEventListener("change", strength_level_check);
+symbol_checkbox.addEventListener("change", strength_level_check);
+
+var strength_level = [ ['white', 'too weak'], ['red', 'too weak'], ['orange', 'weak'], ['yellow', 'medium'],  ['green', 'strong']];
+var color = ['white', 'red', 'orange', 'yellow', 'green'];
+function strength_level_check(){
+    if (this.checked) {
+        strength++;
+    } else if(this.checked != true && strength > 0){
+        strength--;
+    }
+    console.log(strength_level[0][1]);
+    for (var i = 0; i < bar_list.length; i++) {
+        bar_list[i].style.borderColor = color[strength];
+    }
+}
+
+
+function check_setting(element, setting){
+    if (element.checked) {
+        setting.push(1);
+      } else {
+        setting.push(0);
+      }
+}
+
+function password_generation(){
+    var uppercaseLetters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+    var lowercaseLetters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+    var symbols = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '=', '+', '[', ']', '{', '}', ';', ':', ',', '.', '/', '?', '|'];
+    var numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+    var pool = [];   //2D_pool
+    var len = slideValue.value; //length of pw
+    var count = [0,0,0,0];//count which group is used in pw
+    var output="";//output pw
+    var setting = [];
+    check_setting(upper_case_checkbox, setting);
+    check_setting(lower_case_checkbox, setting);
+    check_setting(number_checkbox, setting);
+    check_setting(symbol_checkbox, setting);
+
+    var find_set = 0;
+    for(let k=0; k < 4; k++){
+    if(setting[k] === 1){
+        find_set++;
+        }
+    }
+
+    if(find_set == 0){
+
+        alert("not setting selected!");
+        return 0;
+    }
+    else if(find_set > len){
+        alert("the lenght of the password is too short");
+        return 0;
+    }
+
+    //push to the 2D_pool
+    pool.push(uppercaseLetters);
+    pool.push(lowercaseLetters);
+    pool.push(symbols);
+    pool.push(numbers);
+
+
+    //by default find_count has to be 4 (all is 0 when no password is generated yet)
+    var find_count = 0;
+    var index = 0;
+    var pool_length = pool[0].length + pool[1].length + pool[2].length + pool[3].length;
+
+    while (len !== 0){
+        //generated random number from pool_2
+        a=Math.floor((Math.random()*pool_length)); 
+        for(let i =0; i < 4;i++){
+            if(pool[i].length > a ){ //know the index place
+                index = i;
+                break;
+            }
+            a-=pool[i].length; //deduce the one of the length of 2D array, if >= then the random number is located in pool_1[i]
+        }
+        
+        if(len === find_set - find_count && count[index] !== 0 || setting[index] === 0){
+            
+        }
+        else{
+            output+=pool[index][a];
+            count[index]++;
+            len--;
+        }
+        
+        find_count = 0;
+        for(let k=0; k < 4; k++){
+            if(count[k]>0){
+                find_count++;
+            }
+        }
+    }
+    
+    generated_pw.innerHTML = output;
+}
+
+
+
