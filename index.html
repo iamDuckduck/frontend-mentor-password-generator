@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Password generator</title>
+    
+</head>
+<body>
+    <div id="grid-container">
+        <div id="title">
+            <p>Password Generator</p>
+        </div>
+        <div id="output-container">
+            <div id="output">
+                <p id="generated_pw"></p>
+            </div>
+            <div id="button-container">
+                <button id="copy-password" type="button"></button>
+            </div>
+        </div>
+        <div id="setting-container">
+            <div id="character-length-container">
+                <div id="character-length-title">
+                    <p>Character Length</p>
+                </div>
+                <div id="character-length-number">
+                    <span id="f">10</span>
+                </div>
+            </div>
+            <div id="slidecontainer">
+                <input type="range" min="1" max="20" value="10" class="slider" id="range">
+            </div>
+            <div id="tick-box-list">
+                <label class="tick-box-container">Include Uppercase Letters
+                    <input type="checkbox" id="uppercase" value = "0" data-index="0">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="tick-box-container">Include Lowercase Letters
+                    <input type="checkbox" id="lowercase" value = "0" data-index="1">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="tick-box-container">Include Symbols
+                    <input type="checkbox" id="symbol" value = "0" data-index="2">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="tick-box-container">Include Numbers
+                    <input type="checkbox" id="number" value = "0" data-index="3">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+            <div id="strength-container">
+                <div id="strength-title">
+                    <p>STRENGTH</p>
+                </div>
+                <div id="strength-level-container">
+                    <div id="strength-level-in-word">
+                        <p>TOO WEAK</p>
+                    </div>
+                    <div id="strength-level-in-bar">
+                        <div class="bar-list" id="bar-1"></div>
+                        <div class="bar-list" id="bar-2"></div>
+                        <div class="bar-list" id="bar-3"></div>
+                        <div class="bar-list" id="bar-4"></div>
+                    </div>
+                </div>
+            </div>
+            <button id="generate-button" type="button">Generate</button>
+        </div>
+        <div><p id="error"></p></div>
+    </div>
+    <script src="./script.js"></script>
+    
+</body>
+</html>

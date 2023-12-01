@@ -1,0 +1,61 @@
+var uppercaseLetters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+var lowercaseLetters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+var symbols = ['!', '@', '#', '$', '%', '^', '&', '', '(', ')', '-', '_', '=', '+', '[', ']', '{', '}', ';', ':', ',', '.', '/', '?', '|'];
+var numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+var theList = [];                //pool
+var len =8;                 //length of pw
+var set = [0,1,1,1]         //pw setting
+var count = [0,0,0,0];     //
+var output="";            //output pw
+
+//push to the pool
+theList.push(uppercaseLetters);
+theList.push(lowercaseLetters);
+theList.push(symbols);
+theList.push(numbers);
+
+var remainLen = len; //len after selection
+var find_set = 0; //number of setting
+var output =[];  //password before randomize
+
+for (let i = 0; i < 4; i++) {
+  if (set[i] == 1) {
+    find_set++;
+  }
+}    
+
+for(let i = 0; i < 4; i++){
+  if(set[i] == 1){
+    a=Math.floor((Math.random()*remainLen)) + 1;
+    
+    if(find_set != 1){
+      while (remainLen - a < find_set){
+        a=Math.floor((Math.random()*remainLen)) + 1;
+      }
+    }
+    else{
+      a=remainLen;
+    }
+    
+    console.log(a);
+    
+    for(let k = 0; k < a; k++){
+      b=Math.floor((Math.random()*theList[i].length));
+      output.push(theList[i][b]);
+    }
+    find_set--;
+    remainLen= remainLen - a;
+  }
+}
+
+console.log(output);
+
+var password = "";
+
+while(output.length != 0){
+  a=Math.floor(Math.random()*(output.length-1));
+  password+=output[a]
+  output.splice(a, 1);
+}
+console.log(password);
